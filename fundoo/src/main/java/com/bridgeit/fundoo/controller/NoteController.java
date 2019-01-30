@@ -1,5 +1,7 @@
 package com.bridgeit.fundoo.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -59,6 +61,23 @@ public class NoteController
 		return new ResponseEntity<Response>(response,HttpStatus.NOT_FOUND);
 	}
 	
+	@RequestMapping(value="/getNote",method=RequestMethod.GET)
+	public ResponseEntity<Note> getNote(@RequestHeader("token")String token)
+	{
+		//System.out.println("hi");
+		Note userNote=noteService.getNote(token);
+		response=new Response();
+		response.setStatusCode(166);
+		response.setStatus("note get successfully");
+		System.out.println("before send "+userNote);
+		return new ResponseEntity<Note>(userNote,HttpStatus.OK);
+	}
 	
+	@RequestMapping(value="/getAllNote",method=RequestMethod.GET)
+	public ResponseEntity<List<Note>> getAllNote(@RequestHeader("token") String token)
+	{	
+		List<Note> noteList=noteService.getAllNote(token);	
+		return new ResponseEntity<List<Note>>(noteList,HttpStatus.OK);
+	}
 	
 }

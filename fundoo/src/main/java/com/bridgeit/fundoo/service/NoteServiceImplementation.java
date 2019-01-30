@@ -1,5 +1,7 @@
 package com.bridgeit.fundoo.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,9 +30,9 @@ public class NoteServiceImplementation implements INoteService
 			User user=userService.getUser(id);
 			if(user!=null)
 			{
-			System.out.println(user);
+		//	System.out.println(user);
 			note.setUser(user);
-			System.out.println(note.getUser());
+			//System.out.println(note.getUser());
 			boolean check=noteDao.saveNote(note);
 			if(check)
 				return true;
@@ -46,13 +48,46 @@ public class NoteServiceImplementation implements INoteService
 	@Override
 	public boolean editNote(Note updateNote, Integer id) 
 	{
-		Note note= noteDao.getNote(id);
+		/*Note note= noteDao.getNote(id);
 		note.setTitle(updateNote.getTitle());
 		note.setDescription(updateNote.getDescription());
 		boolean check=noteDao.updateNote(note);
 		if(check)
-			return true;
+			return true;*/
 		return false;
+	}
+	@Override
+	public Note getNote(String token) 
+	{
+		try {
+			int id=UserToken.tokenVerify(token);
+			System.out.println("entered id is "+id);
+			User user=userService.getUser(id);
+			
+			
+			Note userNote=noteDao.getNote(user);
+			return userNote;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+	@Override
+	public List<Note> getAllNote(String token) 
+	{
+		try {
+			int id=UserToken.tokenVerify(token);
+			User user=userService.getUser(id);
+			
+			List<Note> userNoteList=noteDao.getAllNotes(user);
+			return userNoteList;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 }
