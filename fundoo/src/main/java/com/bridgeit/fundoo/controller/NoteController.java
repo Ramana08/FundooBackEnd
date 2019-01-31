@@ -80,4 +80,53 @@ public class NoteController
 		return new ResponseEntity<List<Note>>(noteList,HttpStatus.OK);
 	}
 	
+	
+	@RequestMapping(value="/archiveNote",method=RequestMethod.POST)
+	public ResponseEntity<Response> archiveNote(@RequestBody Note note,@RequestHeader("token") String token)
+	{
+		System.out.println(token);
+		noteService.archiveNote(token,note);
+		response=new Response();
+		response.setStatusCode(200);
+		response.setStatus("archive successfully");
+		System.out.println("conroller");
+		return new ResponseEntity<Response>(response,HttpStatus.OK);
+	}
+	
+	
+	@RequestMapping(value="/getArchiveNote",method=RequestMethod.GET)
+	public ResponseEntity<List<Note>> getArchiveNote(@RequestHeader("token")String token)
+	{
+		//System.out.println("hi");
+		List<Note> userNote=noteService.getArchiveNote(token);
+		response=new Response();
+		response.setStatusCode(166);
+		response.setStatus("note get successfully");
+		System.out.println("before send "+userNote);
+		return new ResponseEntity<List<Note>>(userNote,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/updateArchiveNote" , method=RequestMethod.POST)
+	public ResponseEntity<Response> updateArchive(@RequestBody Note note)
+	{
+		//noteService.updateArchive(note);
+		
+		System.out.println("archive "+note.getArchive());
+		noteService.updateArchive(note);
+		response=new Response();
+		response.setStatusCode(166);
+		response.setStatus("note updated successfully");
+		return new ResponseEntity<Response>(response,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="/deleteNote", method=RequestMethod.DELETE)
+	public ResponseEntity<Response> deleteNote(@RequestBody Note note)
+	{
+		noteService.deleteNote(note);
+		response=new Response();
+		response.setStatusCode(166);
+		response.setStatus("note deleted successfully");
+		return new ResponseEntity<Response>(response,HttpStatus.OK);
+	}
+	
 }

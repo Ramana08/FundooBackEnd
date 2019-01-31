@@ -22,10 +22,58 @@ public class Note implements Serializable {
 	private int id;
 	private String title;
 	private String description;
-
+	
+	private int archive;
+	private String color;
+	private String remainder;
+	private int pin;
+	private int trash;
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	User user;
+
+	
+	
+	public int getArchive() {
+		return archive;
+	}
+
+	public void setArchive(int archive) {
+		this.archive = archive;
+	}
+
+	public String getColor() {
+		return color;
+	}
+
+	public void setColor(String color) {
+		this.color = color;
+	}
+
+	public String getRemainder() {
+		return remainder;
+	}
+
+	public void setRemainder(String remainder) {
+		this.remainder = remainder;
+	}
+
+	public int getPin() {
+		return pin;
+	}
+
+	public void setPin(int pin) {
+		this.pin = pin;
+	}
+
+	public int getTrash() {
+		return trash;
+	}
+
+	public void setTrash(int trash) {
+		this.trash = trash;
+	}
+
 
 	public User getUser() {
 		return user;

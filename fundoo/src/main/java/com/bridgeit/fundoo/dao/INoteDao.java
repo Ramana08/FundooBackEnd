@@ -15,6 +15,10 @@ public interface INoteDao {
 
 	List<Note> getAllNotes(User user);
 
+	Note getArchiveNote(User user);
+
+	boolean deleteNote(Note note);
+
 	
 
 }

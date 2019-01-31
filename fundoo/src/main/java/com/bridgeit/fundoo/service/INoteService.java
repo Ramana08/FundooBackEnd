@@ -14,4 +14,12 @@ public interface INoteService {
 
 	List<Note> getAllNote(String token);
 
+	boolean archiveNote(String token,Note note);
+
+	List<Note> getArchiveNote(String token);
+
+	boolean updateArchive(Note note);
+
+	boolean deleteNote(Note note);
+
 }

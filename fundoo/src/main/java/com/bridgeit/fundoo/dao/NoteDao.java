@@ -2,6 +2,8 @@ package com.bridgeit.fundoo.dao;
 
 import java.util.List;
 
+import org.hibernate.Query;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +28,8 @@ public class NoteDao implements INoteDao
 			//System.out.println(note);
 		//	note.setUser(user);
 			factory.getCurrentSession().save(note);
+			System.out.println("after save "+note);
+
 			System.out.println("note added successfull");
 			return true;
 		}
@@ -57,11 +61,34 @@ public class NoteDao implements INoteDao
 	@Override
 	public List<Note> getAllNotes(User user) {
 		if(factory!=null)
-		{
+		{	
+			System.out.println(user.getUserId());
 			  List<Note> noteList =factory. getCurrentSession().createCriteria(Note.class).createCriteria("user").add(Restrictions.eq("userId", user.getUserId())).list();
+			  
 			  return noteList;
 		}
 		return null;
+	}
+
+	@Override
+	public Note getArchiveNote(User user) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public boolean deleteNote(Note note)
+	{
+		if(factory!=null)
+		{
+//			factory.getCurrentSession().delete(note);
+			Session session=factory.getCurrentSession();
+			Query q = session.createQuery("delete Note where id = "+note.getId());
+			q.executeUpdate();
+			System.out.println("deleted Successfully");
+			return true;
+		}
+		return false;
 	}
 
 	

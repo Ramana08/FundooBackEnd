@@ -1,5 +1,6 @@
 package com.bridgeit.fundoo.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -80,14 +81,99 @@ public class NoteServiceImplementation implements INoteService
 		try {
 			int id=UserToken.tokenVerify(token);
 			User user=userService.getUser(id);
-			
+
 			List<Note> userNoteList=noteDao.getAllNotes(user);
-			return userNoteList;
+			System.out.println("userNote "+userNoteList);
+			List<Note> archiveNotes=new ArrayList<>();
+//			int index=0;
+			for (int i = 0; i < userNoteList.size(); i++) 
+			{
+				if(userNoteList.get(i).getArchive()==0)
+				{
+					archiveNotes.add(userNoteList.get(i));
+				}
+			}
+			System.out.println(archiveNotes);
+			return archiveNotes;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
+	}
+	@Override
+	public boolean archiveNote(String token, Note note) 
+	{
+		try {
+			int id=UserToken.tokenVerify(token);
+			System.out.println("entered id is "+id);
+			User user=userService.getUser(id);
+			if(user!=null)
+			{
+		//	System.out.println(user);
+			note.setUser(user);
+
+			note.setArchive(1);
+			
+			//System.out.println(note.getUser());
+			boolean check=noteDao.saveNote(note);
+			if(check)
+				return true;
+			
+			}
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+	@Override
+	public List<Note> getArchiveNote(String token) {
+		try {
+			int id=UserToken.tokenVerify(token);
+			System.out.println("entered id is "+id);
+			User user=userService.getUser(id);
+			
+			
+			List<Note> userNoteList=noteDao.getAllNotes(user);
+			System.out.println("userNote "+userNoteList);
+			List<Note> archiveNotes=new ArrayList<>();
+//			int index=0;
+			for (int i = 0; i < userNoteList.size(); i++) 
+			{
+				if(userNoteList.get(i).getArchive()==1)
+				{
+					archiveNotes.add(userNoteList.get(i));
+				}
+			}
+			System.out.println(archiveNotes);
+			return archiveNotes;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	
+		return null;
+	}
+	@Override
+	public boolean updateArchive(Note note) {
+		System.out.println("before "+note.getArchive());
+		if(note.getArchive()==0)
+			note.setArchive(1);
+		else
+			note.setArchive(0);
+		System.out.println("update after "+note.getArchive());
+		noteDao.updateNote(note);
+		return true;
+	}
+	@Override
+	public boolean deleteNote(Note note) 
+	{
+		noteDao.deleteNote(note);
+		return false;
 	}
 
 }
