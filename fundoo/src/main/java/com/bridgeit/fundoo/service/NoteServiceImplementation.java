@@ -88,11 +88,12 @@ public class NoteServiceImplementation implements INoteService
 //			int index=0;
 			for (int i = 0; i < userNoteList.size(); i++) 
 			{
-				if(userNoteList.get(i).getArchive()==0)
+				if(userNoteList.get(i).getArchive()==0 && userNoteList.get(i).getTrash()==0)
 				{
 					archiveNotes.add(userNoteList.get(i));
 				}
 			}
+			System.out.println("archive Note");
 			System.out.println(archiveNotes);
 			return archiveNotes;
 		} catch (Exception e) {
@@ -172,8 +173,40 @@ public class NoteServiceImplementation implements INoteService
 	@Override
 	public boolean deleteNote(Note note) 
 	{
-		noteDao.deleteNote(note);
-		return false;
+		note.setTrash(1);
+		noteDao.updateNote(note);
+		return true;
+	}
+	@Override
+	public List<Note> getTrashNote(String token) {
+		try {
+			int id=UserToken.tokenVerify(token);
+			System.out.println("entered id is "+id);
+			User user=userService.getUser(id);
+			
+			
+			List<Note> userNoteList=noteDao.getAllNotes(user);
+			System.out.println("userNote "+userNoteList);
+			List<Note> trashNote=new ArrayList<>();
+//			int index=0;
+			for (int i = 0; i < userNoteList.size(); i++) 
+			{
+				if(userNoteList.get(i).getTrash()==1)
+				{
+					trashNote.add(userNoteList.get(i));
+				}
+			}
+			System.out.println(trashNote);
+			return trashNote;
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+	
+		return null;
 	}
 
-}
+	}
+

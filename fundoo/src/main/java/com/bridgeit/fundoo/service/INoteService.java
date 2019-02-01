@@ -22,4 +22,6 @@ public interface INoteService {
 
 	boolean deleteNote(Note note);
 
+	List<Note> getTrashNote(String token);
+
 }

@@ -73,10 +73,14 @@ public class NoteController
 		return new ResponseEntity<Note>(userNote,HttpStatus.OK);
 	}
 	
+	
+	
+	
 	@RequestMapping(value="/getAllNote",method=RequestMethod.GET)
 	public ResponseEntity<List<Note>> getAllNote(@RequestHeader("token") String token)
 	{	
 		List<Note> noteList=noteService.getAllNote(token);	
+		System.out.println("return Note "+noteList);
 		return new ResponseEntity<List<Note>>(noteList,HttpStatus.OK);
 	}
 	
@@ -119,14 +123,28 @@ public class NoteController
 		return new ResponseEntity<Response>(response,HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/deleteNote", method=RequestMethod.DELETE)
+	@RequestMapping(value="/trashNote", method=RequestMethod.POST)
 	public ResponseEntity<Response> deleteNote(@RequestBody Note note)
 	{
+		
+		System.out.println("delete note");
+		System.out.println(note);
 		noteService.deleteNote(note);
 		response=new Response();
 		response.setStatusCode(166);
 		response.setStatus("note deleted successfully");
 		return new ResponseEntity<Response>(response,HttpStatus.OK);
+	}
+	
+	@RequestMapping(value="getTrashNote",method=RequestMethod.GET)
+	public ResponseEntity<List<Note>> getTrashNote(@RequestHeader("token") String token)
+	{
+		List<Note> trashNote=noteService.getTrashNote(token);
+		response=new Response();
+		response.setStatusCode(166);
+		response.setStatus("note get successfully");
+		System.out.println("before send "+trashNote);
+		return new ResponseEntity<List<Note>>(trashNote,HttpStatus.OK);
 	}
 	
 }

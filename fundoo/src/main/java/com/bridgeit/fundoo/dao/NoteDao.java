@@ -52,6 +52,7 @@ public class NoteDao implements INoteDao
 		if(factory!=null)
 		{
 			factory.getCurrentSession().update(note);
+			System.out.println("delete " +note);
 			System.out.println("Note updated successfully");
 			return true;
 		}
@@ -64,7 +65,7 @@ public class NoteDao implements INoteDao
 		{	
 			System.out.println(user.getUserId());
 			  List<Note> noteList =factory. getCurrentSession().createCriteria(Note.class).createCriteria("user").add(Restrictions.eq("userId", user.getUserId())).list();
-			  
+			  System.out.println("get all notes call finish");
 			  return noteList;
 		}
 		return null;
