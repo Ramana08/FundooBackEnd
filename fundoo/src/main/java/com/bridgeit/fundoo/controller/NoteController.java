@@ -180,13 +180,5 @@ public class NoteController
 //	{
 //		
 //	}
-	@RequestMapping("Login")
-	public ResponseEntity<Response> loginUser(@RequestBody User user)
-	{
-		response=new Response();
-		response.setStatusCode(166);
-		response.setStatus("successfully");
-		return new ResponseEntity<Response>(response,HttpStatus.OK);
-		
-	}
+	
 }
