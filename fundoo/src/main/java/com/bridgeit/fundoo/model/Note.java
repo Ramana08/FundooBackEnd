@@ -23,22 +23,22 @@ public class Note implements Serializable {
 	private String title;
 	private String description;
 	
-	private int archive;
+	private boolean archive;
 	private String color;
 	private String remainder;
-	private int pin;
-	private int trash;
+	private boolean pin;
+	private boolean trash;
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	User user;
 
 	
 	
-	public int getArchive() {
+	public boolean isArchive() {
 		return archive;
 	}
 
-	public void setArchive(int archive) {
+	public void setArchive(boolean archive) {
 		this.archive = archive;
 	}
 
@@ -58,19 +58,19 @@ public class Note implements Serializable {
 		this.remainder = remainder;
 	}
 
-	public int getPin() {
+	public boolean isPin() {
 		return pin;
 	}
 
-	public void setPin(int pin) {
+	public void setPin(boolean pin) {
 		this.pin = pin;
 	}
 
-	public int getTrash() {
+	public boolean isTrash() {
 		return trash;
 	}
 
-	public void setTrash(int trash) {
+	public void setTrash(boolean trash) {
 		this.trash = trash;
 	}
 
@@ -109,6 +109,10 @@ public class Note implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Note [id=" + id + ", title=" + title + ", description=" + description + ", user=" + user + "]";
+		return "Note [id=" + id + ", title=" + title + ", description=" + description + ", archive=" + archive
+				+ ", color=" + color + ", remainder=" + remainder + ", pin=" + pin + ", trash=" + trash + ", user="
+				+ user + "]";
 	}
+
+	
 }

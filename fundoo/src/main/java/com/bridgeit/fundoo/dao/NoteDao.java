@@ -83,10 +83,7 @@ public class NoteDao implements INoteDao
 		if(factory!=null)
 		{
 //			factory.getCurrentSession().delete(note);
-			Session session=factory.getCurrentSession();
-			Query q = session.createQuery("delete Note where id = "+note.getId());
-			q.executeUpdate();
-			System.out.println("deleted Successfully");
+			factory.getCurrentSession().delete(note);
 			return true;
 		}
 		return false;

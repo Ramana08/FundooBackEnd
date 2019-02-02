@@ -25,7 +25,7 @@ public class User implements Serializable
 	private String email;
 	private String password;
 	private String phoneNumber;
-	private int isActive;
+	private boolean isActive;
 	public int getUserId() {
 		return userId;
 	}
@@ -57,10 +57,10 @@ public class User implements Serializable
 		this.phoneNumber = phoneNumber;
 	}
 	
-	public int getIsActive() {
+	public boolean isIsActive() {
 		return isActive;
 	}
-	public void setIsActive(int isActive) {
+	public void setIsActive(boolean isActive) {
 		this.isActive = isActive;
 	}
 

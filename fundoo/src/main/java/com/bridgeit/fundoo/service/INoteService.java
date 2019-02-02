@@ -20,8 +20,12 @@ public interface INoteService {
 
 	boolean updateArchive(Note note);
 
-	boolean deleteNote(Note note);
+	boolean trashUpdateNote(Note note);
 
 	List<Note> getTrashNote(String token);
+
+	boolean colorUpdateNote(Note note);
+
+	boolean deleteNote(Note note);
 
 }

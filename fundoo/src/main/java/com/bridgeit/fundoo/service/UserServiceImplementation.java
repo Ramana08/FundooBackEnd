@@ -24,11 +24,11 @@ public class UserServiceImplementation implements IUserService{
 	@Override
 	public boolean addUser(User user) 
 	{
-		System.out.println(userDao+" "+key);
+	//	System.out.println(userDao+" "+key);
 		String encryptedPassword=Utility.encrypt(user.getPassword(), key);
-		System.out.println(encryptedPassword);
+		//System.out.println(encryptedPassword);
 		user.setPassword(encryptedPassword);
-		user.setIsActive(1);
+		user.setIsActive(true);
 		boolean check=userDao.save(user);
 		return check;
 	}

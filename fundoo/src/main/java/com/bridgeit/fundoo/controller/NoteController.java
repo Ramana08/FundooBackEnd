@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.fundoo.model.Note;
 import com.bridgeit.fundoo.model.Response;
+import com.bridgeit.fundoo.model.User;
 import com.bridgeit.fundoo.service.INoteService;
 
 @RestController
@@ -35,6 +36,8 @@ public class NoteController
 	{/*
 		System.out.println(note);
 		System.out.println(note.getUser().getUserId());*/
+		System.out.println("check "+note);
+
 		System.out.println("entered token is "+token);
 		noteService.addNote(token,note);
 		
@@ -115,7 +118,7 @@ public class NoteController
 	{
 		//noteService.updateArchive(note);
 		
-		System.out.println("archive "+note.getArchive());
+		System.out.println("archive "+note.isArchive());
 		noteService.updateArchive(note);
 		response=new Response();
 		response.setStatusCode(166);
@@ -123,18 +126,32 @@ public class NoteController
 		return new ResponseEntity<Response>(response,HttpStatus.OK);
 	}
 	
-	@RequestMapping(value="/trashNote", method=RequestMethod.POST)
+	@RequestMapping(value="/updateTrashNote", method=RequestMethod.POST)
 	public ResponseEntity<Response> deleteNote(@RequestBody Note note)
 	{
 		
-		System.out.println("delete note");
+		System.out.println("UPDATE trash note");
 		System.out.println(note);
-		noteService.deleteNote(note);
+		noteService.trashUpdateNote(note);
 		response=new Response();
 		response.setStatusCode(166);
 		response.setStatus("note deleted successfully");
 		return new ResponseEntity<Response>(response,HttpStatus.OK);
 	}
+	
+	@RequestMapping(value="/updateColorNote", method=RequestMethod.POST)
+	public ResponseEntity<Response> updateColorNote(@RequestBody Note note)
+	{
+		
+		System.out.println("UPDATE color note");
+		System.out.println(note);
+		noteService.colorUpdateNote(note);
+		response=new Response();
+		response.setStatusCode(166);
+		response.setStatus("color updated successfully");
+		return new ResponseEntity<Response>(response,HttpStatus.OK);
+	}
+	
 	
 	@RequestMapping(value="getTrashNote",method=RequestMethod.GET)
 	public ResponseEntity<List<Note>> getTrashNote(@RequestHeader("token") String token)
@@ -147,4 +164,29 @@ public class NoteController
 		return new ResponseEntity<List<Note>>(trashNote,HttpStatus.OK);
 	}
 	
+	@RequestMapping(value="trashNote" , method=RequestMethod.POST)
+	public ResponseEntity<Response> delteForeverNote(@RequestBody Note note)
+	{
+		noteService.deleteNote(note);
+		response=new Response();
+		response.setStatusCode(166);
+		response.setStatus("note deleted permenantly successfully");
+//		System.out.println("before send "+trashNote);
+		return new ResponseEntity<Response>(response,HttpStatus.OK);
+	}
+//	
+//	@RequestMapping(value="restoreTrashNote", method=RequestMethod.GET)
+//	public ResponseEntity<Response> getRestoteTrashNote(@RequestHeader("token") String token)
+//	{
+//		
+//	}
+	@RequestMapping("Login")
+	public ResponseEntity<Response> loginUser(@RequestBody User user)
+	{
+		response=new Response();
+		response.setStatusCode(166);
+		response.setStatus("successfully");
+		return new ResponseEntity<Response>(response,HttpStatus.OK);
+		
+	}
 }

@@ -84,18 +84,19 @@ public class NoteServiceImplementation implements INoteService
 
 			List<Note> userNoteList=noteDao.getAllNotes(user);
 			System.out.println("userNote "+userNoteList);
-			List<Note> archiveNotes=new ArrayList<>();
-//			int index=0;
-			for (int i = 0; i < userNoteList.size(); i++) 
-			{
-				if(userNoteList.get(i).getArchive()==0 && userNoteList.get(i).getTrash()==0)
-				{
-					archiveNotes.add(userNoteList.get(i));
-				}
-			}
-			System.out.println("archive Note");
-			System.out.println(archiveNotes);
-			return archiveNotes;
+//			List<Note> archiveNotes=new ArrayList<>();
+////			int index=0;
+//			for (int i = 0; i < userNoteList.size(); i++) 
+//			{
+//				if(userNoteList.get(i).isArchive()==false && userNoteList.get(i).isTrash()==false )
+//				{
+//					archiveNotes.add(userNoteList.get(i));
+//				}
+//			}
+//			System.out.println("archive Note");
+//			System.out.println(archiveNotes);
+//			return archiveNotes;
+			return userNoteList;
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -114,7 +115,7 @@ public class NoteServiceImplementation implements INoteService
 		//	System.out.println(user);
 			note.setUser(user);
 
-			note.setArchive(1);
+			note.setArchive(true);
 			
 			//System.out.println(note.getUser());
 			boolean check=noteDao.saveNote(note);
@@ -143,7 +144,7 @@ public class NoteServiceImplementation implements INoteService
 //			int index=0;
 			for (int i = 0; i < userNoteList.size(); i++) 
 			{
-				if(userNoteList.get(i).getArchive()==1)
+				if(userNoteList.get(i).isArchive()==true)
 				{
 					archiveNotes.add(userNoteList.get(i));
 				}
@@ -161,19 +162,23 @@ public class NoteServiceImplementation implements INoteService
 	}
 	@Override
 	public boolean updateArchive(Note note) {
-		System.out.println("before "+note.getArchive());
-		if(note.getArchive()==0)
-			note.setArchive(1);
+		System.out.println("before "+note.isArchive());
+		if(note.isArchive()==false)
+			note.setArchive(true);
 		else
-			note.setArchive(0);
-		System.out.println("update after "+note.getArchive());
+			note.setArchive(false);
+		System.out.println("update after "+note.isArchive());
 		noteDao.updateNote(note);
 		return true;
 	}
 	@Override
-	public boolean deleteNote(Note note) 
+	public boolean trashUpdateNote(Note note) 
 	{
-		note.setTrash(1);
+		if(note.isTrash()==false)
+		note.setTrash(true);
+		else
+			note.setTrash(false);
+		System.out.println("update after trash"+note.isArchive());
 		noteDao.updateNote(note);
 		return true;
 	}
@@ -191,7 +196,7 @@ public class NoteServiceImplementation implements INoteService
 //			int index=0;
 			for (int i = 0; i < userNoteList.size(); i++) 
 			{
-				if(userNoteList.get(i).getTrash()==1)
+				if(userNoteList.get(i).isTrash()==true)
 				{
 					trashNote.add(userNoteList.get(i));
 				}
@@ -206,6 +211,17 @@ public class NoteServiceImplementation implements INoteService
 
 	
 		return null;
+	}
+	@Override
+	public boolean colorUpdateNote(Note note) {
+		noteDao.updateNote(note);
+		return true;
+	}
+	@Override
+	public boolean deleteNote(Note note) {
+		
+		noteDao.deleteNote(note);
+		return true;
 	}
 
 	}
