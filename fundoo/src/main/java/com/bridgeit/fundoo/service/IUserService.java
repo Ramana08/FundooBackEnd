@@ -1,5 +1,6 @@
 package com.bridgeit.fundoo.service;
 
+import com.bridgeit.fundoo.dto.UserDto;
 import com.bridgeit.fundoo.model.GenerateOtp;
 import com.bridgeit.fundoo.model.User;
 
@@ -20,7 +21,7 @@ public interface IUserService {
 	boolean deleteUser(Integer id);
 
 	
-	String userLogin(User user);
+	UserDto userLogin(User user);
 	
 	
 	public User getUser(Integer id);

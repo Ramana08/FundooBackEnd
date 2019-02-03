@@ -2,10 +2,12 @@ package com.bridgeit.fundoo.service;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.bridgeit.fundoo.dao.IUserDao;
+import com.bridgeit.fundoo.dto.UserDto;
 import com.bridgeit.fundoo.model.GenerateOtp;
 import com.bridgeit.fundoo.model.User;
 import com.bridgeit.fundoo.utility.UserToken;
@@ -46,7 +48,11 @@ public class UserServiceImplementation implements IUserService{
 			}
 		}
 		String password=Utility.OTP();
+		
+		
 		GenerateOtp userOtp=new GenerateOtp();
+		
+		
 		System.out.println(user);
 //		userOtp.setEmail(user.getEmail());
 //		userOtp.setOtpPassword(password);
@@ -111,7 +117,7 @@ public class UserServiceImplementation implements IUserService{
 		return false;
 	}
 	@Override
-	public String userLogin(User user) 
+	public UserDto userLogin(User user) 
 	{
 		
 		List<User> userList=userDao.getAllUser();
@@ -120,17 +126,13 @@ public class UserServiceImplementation implements IUserService{
 			String encrptedPassword=Utility.encrypt(user.getPassword(), key);
 			if(user.getEmail().equals(userList.get(i).getEmail()) && encrptedPassword.equals(userList.get(i).getPassword()))
 			{
-				
-				try {
-					return UserToken.generateToken(userList.get(i).getUserId());
-				} catch (Exception e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				ModelMapper mapper=new ModelMapper();
+				UserDto loginUser=mapper.map(userList.get(i),UserDto.class);
+				System.out.println("login user "+loginUser);
+				return loginUser;
 			}
-				
 		}
-		return "not valid";
+		return null;
 	}
 	@Override
 	public User getUser(Integer id) {

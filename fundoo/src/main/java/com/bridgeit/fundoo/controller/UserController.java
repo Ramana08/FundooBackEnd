@@ -15,10 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.bridgeit.fundoo.dto.UserDto;
 import com.bridgeit.fundoo.model.GenerateOtp;
 import com.bridgeit.fundoo.model.Response;
 import com.bridgeit.fundoo.model.User;
 import com.bridgeit.fundoo.service.IUserService;
+import com.bridgeit.fundoo.utility.UserToken;
 
 @RestController
 //@RequestMapping("/fundoo")
@@ -56,10 +58,10 @@ public class UserController {
 	@RequestMapping(value="/login", method=RequestMethod.POST )
 	public ResponseEntity<Response> userLogin(@RequestBody User user,HttpServletResponse httpResponse)
 	{
-		String token=userService.userLogin(user);
+		UserDto loginUser=userService.userLogin(user);
 		response=new Response();
 		
-		if(token.equals("not valid"))
+		if(loginUser==null)
 		{
 			response.setStatusCode(404);
 			response.setStatus("user is not valid");
@@ -67,10 +69,19 @@ public class UserController {
 		}
 		response.setStatusCode(166);
 		response.setStatus("login successfully");
-		httpResponse.addHeader("jwtTokenxxx", token);
-		System.out.println("response="+response);
-		System.out.println(token);
+		response.setData(loginUser);
+		String token;
+		try {
+			token = UserToken.generateToken(loginUser.getUserId());
+			httpResponse.addHeader("jwtTokenxxx", token);
+			System.out.println("response data = "+response.getData());
+			//System.out.println(token);
+			
 		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return new ResponseEntity<Response>(response,HttpStatus.OK);
 	}
 	
