@@ -25,7 +25,8 @@ import com.bridgeit.fundoo.utility.UserToken;
 @RestController
 //@RequestMapping("/fundoo")
 
-@CrossOrigin(origins= {"http://localhost:4203"},exposedHeaders= {"jwtTokenxxx"})
+@CrossOrigin(origins= {"*"},allowedHeaders = "*",
+exposedHeaders= {"jwtTokenxxx"})
 public class UserController {
 
 	

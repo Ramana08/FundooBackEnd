@@ -28,4 +28,6 @@ public interface INoteService {
 
 	boolean deleteNote(Note note);
 
+	boolean updateNote(Note note);
+
 }

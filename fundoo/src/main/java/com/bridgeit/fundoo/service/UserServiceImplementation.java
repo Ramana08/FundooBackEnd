@@ -10,7 +10,6 @@ import com.bridgeit.fundoo.dao.IUserDao;
 import com.bridgeit.fundoo.dto.UserDto;
 import com.bridgeit.fundoo.model.GenerateOtp;
 import com.bridgeit.fundoo.model.User;
-import com.bridgeit.fundoo.utility.UserToken;
 import com.bridgeit.fundoo.utility.Utility;
 
 @Transactional

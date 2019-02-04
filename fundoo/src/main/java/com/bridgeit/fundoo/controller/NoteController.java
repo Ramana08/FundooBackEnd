@@ -15,13 +15,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bridgeit.fundoo.model.Note;
 import com.bridgeit.fundoo.model.Response;
-import com.bridgeit.fundoo.model.User;
 import com.bridgeit.fundoo.service.INoteService;
 
 @RestController
 //@RequestMapping("/fundoo")
 
-@CrossOrigin(origins= {"http://localhost:4203"},exposedHeaders= {"token"})
+@CrossOrigin(origins= {"http://localhost:4203"},allowedHeaders = "*",
+exposedHeaders= {"token"})
 public class NoteController 
 {
 
@@ -50,16 +50,18 @@ public class NoteController
 	
 	
 	
-	@RequestMapping("/editNote/{id}")
-	public ResponseEntity<Response> editNote(@RequestBody Note note,@PathVariable Integer id)
+	@RequestMapping(value="/updateNote",method=RequestMethod.POST)
+	public ResponseEntity<Response> editNote(@RequestBody Note note)
 	{
-		boolean check=noteService.editNote(note,id);
+		boolean check=noteService.updateNote(note);
 		response=new Response();
 		if(check)
 		{
+			response.setStatusCode(166);
 			response.setStatus("note updated successfully");
 			return new ResponseEntity<Response>(response,HttpStatus.OK);
 		}
+		response.setStatusCode(0);
 		response.setStatus("note is not present");
 		return new ResponseEntity<Response>(response,HttpStatus.NOT_FOUND);
 	}
@@ -174,11 +176,12 @@ public class NoteController
 //		System.out.println("before send "+trashNote);
 		return new ResponseEntity<Response>(response,HttpStatus.OK);
 	}
-//	
-//	@RequestMapping(value="restoreTrashNote", method=RequestMethod.GET)
-//	public ResponseEntity<Response> getRestoteTrashNote(@RequestHeader("token") String token)
-//	{
-//		
-//	}
-	
+	@RequestMapping("/createLabel/{id}")
+	public ResponseEntity<Response> addLabel(@RequestBody Note note,@PathVariable int id)
+	{
+		System.out.println(note);
+		response.setStatusCode(166);
+		response.setStatus("note deleted permenantly successfully");
+		return new ResponseEntity<Response>(response,HttpStatus.OK);
+	}
 }

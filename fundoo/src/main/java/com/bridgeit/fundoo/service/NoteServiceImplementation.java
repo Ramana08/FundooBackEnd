@@ -10,7 +10,6 @@ import com.bridgeit.fundoo.dao.INoteDao;
 import com.bridgeit.fundoo.model.Note;
 import com.bridgeit.fundoo.model.User;
 import com.bridgeit.fundoo.utility.UserToken;
-import com.bridgeit.fundoo.utility.Utility;
 
 @Transactional
 public class NoteServiceImplementation implements INoteService
@@ -221,6 +220,11 @@ public class NoteServiceImplementation implements INoteService
 	public boolean deleteNote(Note note) {
 		
 		noteDao.deleteNote(note);
+		return true;
+	}
+	@Override
+	public boolean updateNote(Note note) {
+		noteDao.updateNote(note);
 		return true;
 	}
 

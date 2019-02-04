@@ -2,8 +2,6 @@ package com.bridgeit.fundoo.dao;
 
 import java.util.List;
 
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -64,7 +62,8 @@ public class NoteDao implements INoteDao
 		if(factory!=null)
 		{	
 			System.out.println(user.getUserId());
-			  List<Note> noteList =factory. getCurrentSession().createCriteria(Note.class).createCriteria("user").add(Restrictions.eq("userId", user.getUserId())).list();
+			  @SuppressWarnings("unchecked")
+			List<Note> noteList =factory. getCurrentSession().createCriteria(Note.class).createCriteria("user").add(Restrictions.eq("userId", user.getUserId())).list();
 			  System.out.println("get all notes call finish");
 			  return noteList;
 		}

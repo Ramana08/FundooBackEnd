@@ -31,9 +31,18 @@ public class Note implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	User user;
+//	@ManyToMany(mappedBy="Note")
+//	private Label label;
+//	
+//	
+//	public Label getLabel() {
+//		return label;
+//	}
+//
+//	public void setLabel(Label label) {
+//		this.label = label;
+//	}
 
-	
-	
 	public boolean isArchive() {
 		return archive;
 	}
@@ -114,5 +123,8 @@ public class Note implements Serializable {
 				+ user + "]";
 	}
 
+
+
+	
 	
 }
