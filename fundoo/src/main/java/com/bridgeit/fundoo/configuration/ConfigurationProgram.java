@@ -16,12 +16,16 @@ import org.springframework.orm.hibernate4.LocalSessionFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
+import com.bridgeit.fundoo.dao.ILabelDao;
 import com.bridgeit.fundoo.dao.INoteDao;
 import com.bridgeit.fundoo.dao.IUserDao;
+import com.bridgeit.fundoo.dao.LabelDao;
 import com.bridgeit.fundoo.dao.NoteDao;
 import com.bridgeit.fundoo.dao.UserDao;
+import com.bridgeit.fundoo.service.ILabelService;
 import com.bridgeit.fundoo.service.INoteService;
 import com.bridgeit.fundoo.service.IUserService;
+import com.bridgeit.fundoo.service.LabelServiceImplementation;
 import com.bridgeit.fundoo.service.NoteServiceImplementation;
 import com.bridgeit.fundoo.service.UserServiceImplementation;
 
@@ -29,7 +33,7 @@ import com.bridgeit.fundoo.service.UserServiceImplementation;
 @EnableWebMvc
 @ComponentScan(basePackages = "com.bridgeit.fundoo")
 @EnableTransactionManagement
-@PropertySource("classpath:db.properties")
+@PropertySource("classpath:application.properties")
 public class ConfigurationProgram {
 	private static final String PROPERTY_NAME_DATABASE_DRIVER = "db.driver";
 
@@ -148,7 +152,11 @@ public class ConfigurationProgram {
 	   {
 		   return "ramana";
 	   }
-	   
+	   @Bean
+	   public ILabelService getILabelService()
+	   {
+		   return new LabelServiceImplementation();
+	   }
 	   @Bean
 	   public INoteService getINoteService()
 	   {
@@ -159,12 +167,7 @@ public class ConfigurationProgram {
 	   {
 		   return new NoteDao();
 	   }
-	  /* @Bean
-	   public UserOtp getUserOtp()
-	   {
-		   System.out.println("user otp ");
-		   return new UserOtp();
-	   }*/
-	   
+	  
+
 	   
 }
