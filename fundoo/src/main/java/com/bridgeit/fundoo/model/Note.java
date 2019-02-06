@@ -1,7 +1,7 @@
 package com.bridgeit.fundoo.model;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +11,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "Note")
@@ -35,10 +37,19 @@ public class Note implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "userId")
 	User user;
-	@ManyToMany
-	@JoinColumn(name = "labelId")
-	Set<Label> label;
+	@ManyToMany(mappedBy="noteList")
+	@JsonIgnore
+	List<Label> label;
 	
+	
+	public List<Label> getLabel() {
+		return label;
+	}
+
+	public void setLabel(List<Label> label) {
+		this.label = label;
+	}
+
 	public boolean isArchive() {
 		return archive;
 	}

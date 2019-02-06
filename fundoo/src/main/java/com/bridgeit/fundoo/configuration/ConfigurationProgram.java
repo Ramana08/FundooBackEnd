@@ -43,7 +43,7 @@ public class ConfigurationProgram {
 
 	   private static final String PROPERTY_NAME_DATABASE_USERNAME = "db.username";
 
-
+	   private static final String PROPERTY_NAME_UPDATE="hibernate.hbm2ddl.auto";
 
 	   private static final String PROPERTY_NAME_HIBERNATE_DIALECT = "hibernate.dialect";
 
@@ -112,6 +112,8 @@ public class ConfigurationProgram {
 
 	       Properties properties = new Properties();
 
+	       	properties.put(PROPERTY_NAME_UPDATE,env.getRequiredProperty("hibernate.hbm2ddl.auto"));
+	       	
 	       properties.put(PROPERTY_NAME_HIBERNATE_DIALECT, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_DIALECT));
 
 	       properties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, env.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
