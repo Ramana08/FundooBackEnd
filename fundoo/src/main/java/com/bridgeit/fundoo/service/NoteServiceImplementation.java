@@ -170,6 +170,32 @@ public class NoteServiceImplementation implements INoteService
 		}
 		return false;
 	}
+	
+	
+	@Override
+	public boolean updatePin(int id, String token) {
+		
+		try {
+			int userId = UserToken.tokenVerify(token);
+			Note note=noteDao.getNote(id);
+			if(userId==note.getUser().getUserId())
+			{
+					if(note.isPin()==false)
+						note.setPin(true);
+					else
+						note.setPin(false);
+				noteDao.updateNote(note);
+				return true;
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return false;
+	}
+
+	
+	
 	@Override
 	public List<Note> getTrashNote(String token) {
 		try {
@@ -244,5 +270,6 @@ public class NoteServiceImplementation implements INoteService
 		return true;
 	}
 
+	
 	}
 

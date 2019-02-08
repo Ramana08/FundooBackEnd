@@ -28,4 +28,6 @@ public interface INoteService {
 
 	boolean updateNote(Note note,String token);
 
+	boolean updatePin(int id, String token);
+
 }

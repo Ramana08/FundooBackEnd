@@ -54,7 +54,6 @@ public class ConfigurationProgram {
 
 
 	   @Resource
-
 	   private Environment env;
 
 
@@ -63,20 +62,20 @@ public class ConfigurationProgram {
 
 	   public DataSource dataSource() {
 		   System.out.println("data source");
-		   //System.out.println("122");
+		
 	       DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-	//System.out.println("6656");
+
 
 	       dataSource.setDriverClassName(env.getRequiredProperty(PROPERTY_NAME_DATABASE_DRIVER));
 	       
 	       dataSource.setUrl(env.getRequiredProperty(PROPERTY_NAME_DATABASE_URL));
-	       //System.out.println("raetgtawryer");
+	
 	       dataSource.setUsername(env.getRequiredProperty(PROPERTY_NAME_DATABASE_USERNAME));
 
 	       dataSource.setPassword(env.getRequiredProperty(PROPERTY_NAME_DATABASE_PASSWORD));
 
-	     //  System.out.println("hi");
+	  
 	       System.out.println(dataSource);
 
 	       return dataSource;

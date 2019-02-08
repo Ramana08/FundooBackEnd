@@ -115,7 +115,15 @@ public class NoteController
 		return new ResponseEntity<Response>(response,HttpStatus.OK);
 	}
 	
-	
+	@RequestMapping(value="/note/pin/{id}",method=RequestMethod.PUT)
+	public ResponseEntity<Response> updatePin(@PathVariable int id,@RequestHeader("token") String token)
+	{
+		noteService.updatePin(id,token);
+		response=new Response();
+		response.setStatusCode(166);
+		response.setStatus("update pin successfully");
+		return new ResponseEntity<Response>(response,HttpStatus.OK);
+	}
 	
 	
 	
