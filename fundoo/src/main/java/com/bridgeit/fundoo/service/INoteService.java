@@ -8,26 +8,24 @@ public interface INoteService {
 
 	boolean addNote(String token,Note note);
 
-	boolean editNote(Note note, Integer id);
-
-	Note getNote(String token);
+	//Note getNote(String token);
 
 	List<Note> getAllNote(String token);
 
-	boolean archiveNote(String token,Note note);
+	boolean archiveNote(String token,int id);
 
 	List<Note> getArchiveNote(String token);
 
-	boolean updateArchive(Note note);
+	boolean updateArchive(int id,String token);
 
-	boolean trashUpdateNote(Note note);
+	boolean trashUpdateNote(int id,String token);
 
 	List<Note> getTrashNote(String token);
 
-	boolean colorUpdateNote(Note note);
+	boolean colorUpdateNote(int id,String token,Note note);
 
-	boolean deleteNote(Note note);
+	boolean deleteNote(int id,String token);
 
-	boolean updateNote(Note note);
+	boolean updateNote(Note note,String token);
 
 }

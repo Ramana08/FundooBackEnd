@@ -24,7 +24,6 @@ public class Note implements Serializable {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue
-	@PrimaryKeyJoinColumn
 	private int id;
 	private String title;
 	private String description;

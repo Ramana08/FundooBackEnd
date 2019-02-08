@@ -9,11 +9,11 @@ public interface INoteDao {
 
 	boolean saveNote(Note note);
 
-	Note getNote(User user);
+	Note getNote(int id);
 
 	boolean updateNote(Note note);
 
-	List<Note> getAllNotes(User user);
+	List<Note> getAllNotes(int userId);
 
 	Note getArchiveNote(User user);
 

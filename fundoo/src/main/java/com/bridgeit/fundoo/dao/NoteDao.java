@@ -22,9 +22,6 @@ public class NoteDao implements INoteDao
 	{
 		if(factory!=null)
 		{
-		//System.out.println(factory);
-			//System.out.println(note);
-		//	note.setUser(user);
 			factory.getCurrentSession().save(note);
 			System.out.println("after save "+note);
 
@@ -37,11 +34,11 @@ public class NoteDao implements INoteDao
 	}
 
 	@Override
-	public Note getNote(User user) {
-		System.out.println(user.getUserId());
-		Note userNote=(Note) factory.getCurrentSession().get(Note.class,user.getUserId());
-		System.out.println("user new note "+userNote);
-		return userNote;
+	public Note getNote(int id) 
+	{
+		 Note note=(Note) factory.getCurrentSession().get(Note.class,id);
+		 return note;
+
 	}
 
 	@Override
@@ -50,7 +47,7 @@ public class NoteDao implements INoteDao
 		if(factory!=null)
 		{
 			factory.getCurrentSession().update(note);
-			System.out.println("delete " +note);
+			System.out.println("update  " +note);
 			System.out.println("Note updated successfully");
 			return true;
 		}
@@ -58,12 +55,12 @@ public class NoteDao implements INoteDao
 	}
 
 	@Override
-	public List<Note> getAllNotes(User user) {
+	public List<Note> getAllNotes(int userId) {
 		if(factory!=null)
 		{	
-			System.out.println(user.getUserId());
+		
 			  @SuppressWarnings("unchecked")
-			List<Note> noteList =factory. getCurrentSession().createCriteria(Note.class).createCriteria("user").add(Restrictions.eq("userId", user.getUserId())).list();
+			List<Note> noteList =factory. getCurrentSession().createCriteria(Note.class).createCriteria("user").add(Restrictions.eq("userId", userId)).list();
 			  System.out.println("get all notes call finish");
 			  return noteList;
 		}
@@ -81,7 +78,7 @@ public class NoteDao implements INoteDao
 	{
 		if(factory!=null)
 		{
-//			factory.getCurrentSession().delete(note);
+			System.out.println(note);
 			factory.getCurrentSession().delete(note);
 			return true;
 		}
